@@ -1,0 +1,83 @@
+<div id="wrapper" class="card">
+  <div class="card-header">
+    <div class="row">
+      <div class="col col-md-6">
+        <h5 class="card-title">
+          TodoItems
+        </h5>
+      </div>
+      <div class="text-right col col-md-6">
+        <button id="create-role" class="btn btn-primary" type="button" (click)="showCreateEditTodoItemDialog()">
+          <i class="fa fa-plus mr-1"></i> <span>New TodoItem</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <p-table [value]="todoItems" [rows]="10">
+      <ng-template pTemplate="header">
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th>Completed</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-data>
+        <tr>
+          <td>
+            <div ngbDropdown class="d-inline-block">
+              <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                ngbDropdownToggle>
+                <i class="fa fa-cog mr-1"></i>Actions
+              </button>
+              <div ngbDropdownMenu>
+                <button ngbDropdownItem (click)="showCreateEditTodoItemDialog(data.id)">Edit</button>
+                <button ngbDropdownItem (click)="showDeleteTodoItemDialog(data.id)">Delete</button>
+              </div>
+            </div>
+          </td>
+          <td>{{ data.name }}</td>
+          <td>{{ data.isComplete}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<p-dialog  (onHide)="closeCreateEditTodoItemDialog()" [(visible)]="createEditDisplay" [transitionOptions]="'0ms'" [style]="{width: '400px', height: '200px'}">
+  <p-header>
+    {{todoItemId === -1 ? 'Create TodoITem' : 'Edit TodoItem' }}
+  </p-header>
+  <form #todoItemForm="ngForm" (ngSubmit)="saveTodoItem()">
+    <div class="panel panel-primary">
+      <div class="panel-body">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input id="name" type="text" class="form-control" name="name" [(ngModel)]="todoItem.name">
+        </div>
+        <div class="form-group">
+          <div class="custom-control-inline"><Label>IsComplete</Label></div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input class="custom-control-input" #isComplete="ngModel" type="radio" name="isComplete" id="true" [value]="true"
+              [(ngModel)]="todoItem.isComplete">
+            <label for="true" class="custom-control-label">
+              True
+            </label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input class="custom-control-input" type="radio" #isComplete="ngModel" name="isComplete" id="false" [value]="false"
+              [(ngModel)]="todoItem.isComplete">
+            <label for="false" class="custom-control-label">
+              False
+            </label>
+        </div>
+      </div>
+    </div>
+    </div>
+  </form>
+  <p-footer>
+    <button class="btn btn-primary" type="submit" (click)="saveTodoItem(todoItemForm)">Save</button>
+  </p-footer>
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
