@@ -8,7 +8,7 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class TodoItemsService {
-  private readonly baseUrl = 'https://localhost:5001/api/todoitems';
+  private readonly baseUrl = 'http://localhost:5000/api/todoitems';
 
   constructor(private http: HttpClient) { }
 
