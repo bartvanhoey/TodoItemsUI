@@ -23,7 +23,7 @@ export class TodoItemsComponent implements OnInit {
 
   showCreateEditTodoItemDialog(id?: number) {
     (id === undefined) ? this.todoItemId = -1 : this.todoItemId = id;
-    if (this.todoItemId > -1) {
+    if (this.todoItemId !== -1 ) {
       this.todoItem = this.todoItemsService.getTodoItemFromList(this.todoItemId, this.todoItems);
     }
     this.createEditDisplay = true;
